@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수찬T 과학 수업 앱</title>
+<link href="https://fonts.googleapis.com/css2?family=Gmarket+Sans:wght@300;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0f1e;
+    --surface: #111827;
+    --surface2: #1a2540;
+    --accent1: #4ade80;
+    --accent2: #38bdf8;
+    --accent3: #f472b6;
+    --accent4: #fb923c;
+    --accent5: #a78bfa;
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border: rgba(255,255,255,0.08);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* 배경 별 효과 */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 10%, rgba(74,222,128,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(56,189,248,0.07) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  /* 헤더 */
+  .header {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: fadeDown 0.7s ease both;
+  }
+
+  .avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    margin: 0 auto 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Gmarket Sans', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0a0f1e;
+    box-shadow: 0 0 0 4px rgba(74,222,128,0.2), 0 0 32px rgba(74,222,128,0.15);
+  }
+
+  .header h1 {
+    font-family: 'Gmarket Sans', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+  }
+
+  .header h1 span {
+    background: linear-gradient(90deg, var(--accent1), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* 카테고리 라벨 */
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 2rem 0 0.75rem 0.25rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  /* 앱 카드 */
+  .app-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .app-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    border-radius: 16px 0 0 16px;
+    background: var(--card-accent, var(--accent1));
+    transition: width 0.25s ease;
+  }
+
+  .app-card:hover {
+    transform: translateY(-2px) translateX(2px);
+    border-color: rgba(255,255,255,0.15);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    background: var(--surface2);
+  }
+
+  .app-card:hover::before {
+    width: 5px;
+  }
+
+  .icon-box {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: var(--icon-bg, rgba(74,222,128,0.12));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    flex-shrink: 0;
+  }
+
+  .card-info {
+    flex: 1;
+  }
+
+  .card-info h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+    font-family: 'Gmarket Sans', sans-serif;
+  }
+
+  .card-info p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 99px;
+    background: var(--badge-bg, rgba(74,222,128,0.15));
+    color: var(--badge-color, var(--accent1));
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .arrow {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  .app-card:hover .arrow {
+    transform: translateX(3px);
+    color: var(--card-accent, var(--accent1));
+  }
+
+  /* 색상 테마 */
+  .c1 { --card-accent: var(--accent1); --icon-bg: rgba(74,222,128,0.12); }
+  .c2 { --card-accent: var(--accent4); --icon-bg: rgba(251,146,60,0.12); }
+  .c3 { --card-accent: var(--accent3); --icon-bg: rgba(244,114,182,0.12); }
+  .c4 { --card-accent: var(--accent2); --icon-bg: rgba(56,189,248,0.12); }
+  .c5 { --card-accent: var(--accent5); --icon-bg: rgba(167,139,250,0.12); }
+
+  /* 애니메이션 딜레이 */
+  .d1 { animation-delay: 0.05s; }
+  .d2 { animation-delay: 0.1s; }
+  .d3 { animation-delay: 0.15s; }
+  .d4 { animation-delay: 0.2s; }
+  .d5 { animation-delay: 0.25s; }
+  .d6 { animation-delay: 0.3s; }
+  .d7 { animation-delay: 0.35s; }
+
+  /* 푸터 */
+  .footer {
+    text-align: center;
+    margin-top: 3.5rem;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    line-height: 1.8;
+    animation: fadeUp 0.7s ease 0.4s both;
+  }
+
+  .footer strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* 애니메이션 */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <header class="header">
+    <div class="avatar">수찬</div>
+    <h1><span>수찬T</span> 과학 수업 앱</h1>
+    <p>수찬쌤의 과학 실험실</p>
+  </header>
+
+  <p class="section-label d1">🧬 생물의 구성과 다양성</p>
+
+  <a href="https://soochant.github.io/animal.html" target="_blank" class="app-card c1 d2">
+    <div class="icon-box">🐾</div>
+    <div class="card-info">
+      <h2>동물의 구성 단계 2048</h2>
+      <p>세포 → 조직 → 기관 → 기관계 → 개체<br>2048 방식으로 배우는 동물 구성 단계</p>
+    </div>
+    <span class="badge" style="--badge-bg:rgba(74,222,128,0.15);--badge-color:var(--accent1);">게임</span>
+    <span class="arrow">›</span>
+  </a>
+
+  <a href="https://soochant.github.io/plant.html" target="_blank" class="app-card c2 d3">
+    <div class="icon-box">🌱</div>
+    <div class="card-info">
+      <h2>식물의 구성 단계 2048</h2>
+      <p>세포 → 조직 → 조직계 → 기관 → 개체<br>2048 방식으로 배우는 식물 구성 단계</p>
+    </div>
+    <span class="badge" style="--badge-bg:rgba(251,146,60,0.15);--badge-color:var(--accent4);">게임</span>
+    <span class="arrow">›</span>
+  </a>
+
+  <a href="https://soochant.github.io/watermelongame.html" target="_blank" class="app-card c3 d4">
+    <div class="icon-box">🍉</div>
+    <div class="card-info">
+      <h2>생물 분류 수박게임</h2>
+      <p>드래그로 떨어뜨리며 배우는<br>생물 분류 체계 게임</p>
+    </div>
+    <span class="badge" style="--badge-bg:rgba(244,114,182,0.15);--badge-color:var(--accent3);">게임</span>
+    <span class="arrow">›</span>
+  </a>
+
+  <p class="section-label d4">🔥 열</p>
+
+  <a href="https://soochant.github.io/particlemotion.html" target="_blank" class="app-card c4 d5">
+    <div class="icon-box">⚡</div>
+    <div class="card-info">
+      <h2>온도와 입자운동 탐구</h2>
+      <p>슬라이더로 온도를 바꾸며<br>입자 운동의 변화를 관찰하는 시뮬레이션</p>
+    </div>
+    <span class="badge" style="--badge-bg:rgba(56,189,248,0.15);--badge-color:var(--accent2);">시뮬</span>
+    <span class="arrow">›</span>
+  </a>
+
+  <a href="https://soochant.github.io/thermalequilibrium.html" target="_blank" class="app-card c5 d6">
+    <div class="icon-box">🌡️</div>
+    <div class="card-info">
+      <h2>열평형 실험</h2>
+      <p>측정값을 입력하면 그래프가 자동 완성<br>패들렛 제출까지 연결되는 실험 앱</p>
+    </div>
+    <span class="badge" style="--badge-bg:rgba(167,139,250,0.15);--badge-color:var(--accent5);">실험</span>
+    <span class="arrow">›</span>
+  </a>
+
+
+
+</div>
+</body>
+</html>
