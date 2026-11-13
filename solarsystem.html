@@ -59,7 +59,8 @@ header{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
 
 /* 카드판: 크기는 JS가 화면에 맞춰 정함 */
 main{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
-#grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr)}
+#grid{display:grid;flex-shrink:0}
+main.scroll{align-items:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 
 .card{container-type:size;perspective:1000px;cursor:pointer;min-width:0;min-height:0;touch-action:manipulation}
 .inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
@@ -107,8 +108,8 @@ main{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
 .box h2{font-size:clamp(22px,6vw,36px);font-weight:800;margin-bottom:10px}
 .endstats{font-size:clamp(16px,4.4vw,22px);color:var(--muted);line-height:1.7}
 .endstats b{color:var(--text)}
-.row{display:flex;gap:8px;margin-top:20px}
-.row .btn{flex:1;padding:12px 8px;font-size:clamp(15px,4vw,19px)}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.row .btn{flex:1 1 40%;padding:12px 8px;font-size:clamp(15px,4vw,19px)}
 .row .btn.primary{background:var(--gold);color:#1b1400;border:none;font-weight:800}
 
 .box.wide{max-width:1400px;max-height:100%;display:flex;flex-direction:column;padding:16px;text-align:left}
@@ -122,6 +123,44 @@ main{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
 .rv h3{font-size:clamp(16px,4.2vw,21px);margin-bottom:3px}
 .rv p{font-size:clamp(14px,3.7vw,17px);line-height:1.5;color:#cfd6ef;word-break:keep-all}
 
+.modes{display:grid;gap:10px;margin-top:6px}
+.mode{display:flex;flex-direction:column;gap:4px;padding:16px;border-radius:14px;background:#0b1229;
+  border:1.5px solid var(--line);color:var(--text);font-family:inherit;cursor:pointer;text-align:left;touch-action:manipulation}
+.mode b{font-size:clamp(18px,4.8vw,22px)}
+.mode span{color:var(--muted);font-size:clamp(14px,3.8vw,17px)}
+.mode.on{border-color:var(--gold);background:#ffcb5c14}
+.mode:focus-visible{outline:2px solid var(--sky)}
+.cancel{margin-top:10px;width:100%;padding:11px}
+.btn.primary{background:var(--gold);color:#1b1400;border:none;font-weight:800}
+.btn.big{width:100%;margin-top:4px;padding:14px;font-size:clamp(17px,4.6vw,21px)}
+.field{display:flex;flex-direction:column;gap:6px;text-align:left;margin:4px 0 14px}
+.flbl{color:var(--muted);font-size:clamp(14px,3.8vw,17px);text-align:left}
+.field input{font-family:inherit;font-size:max(16px,min(4.6vw,20px));padding:12px 14px;border-radius:12px;
+  border:1.5px solid var(--line);background:#0b1229;color:var(--text);outline:none;-webkit-user-select:text;user-select:text}
+.field input:focus{border-color:var(--sky)}
+.err{color:var(--bad);min-height:1.4em;margin:8px 0 4px;font-size:clamp(14px,3.8vw,17px);font-weight:700}
+.rec{margin-top:14px;padding:12px;border-radius:12px;background:#0b1229;border:1px solid var(--line);
+  font-size:clamp(15px,4.2vw,19px);line-height:1.7;color:var(--muted)}
+.rec b{color:var(--gold);font-size:1.15em}
+.rec small{display:block;font-size:.8em}
+.rec .btn{margin-top:8px}
+.box.rank{max-width:560px;height:min(100%,760px);display:flex;flex-direction:column;padding:16px;text-align:left}
+.tabs{display:flex;gap:6px;margin-bottom:8px}
+.tabs button{flex:1;background:#0b1229;border:1.5px solid var(--line);color:var(--muted);border-radius:10px;
+  padding:9px 6px;font-size:clamp(14px,3.9vw,17px);font-family:inherit;cursor:pointer;touch-action:manipulation}
+.tabs button.on{border-color:var(--gold);background:#ffcb5c14;color:var(--text);font-weight:800}
+.rlist{flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;margin-top:4px}
+.rrow{display:grid;grid-template-columns:2.6em 1fr auto;align-items:center;gap:8px;padding:9px 8px;
+  border-bottom:1px solid #1d2850;font-size:clamp(15px,4.2vw,19px)}
+.rrow .rk{font-weight:800;text-align:center;color:var(--muted)}
+.rrow .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}
+.rrow .val{font-weight:800;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rrow .val small{display:block;color:var(--muted);font-weight:400;font-size:.72em}
+.rrow.me{background:#ffcb5c1f;border-radius:8px}
+.rempty{color:var(--muted);text-align:center;padding:40px 10px;line-height:1.6}
+.rnote{color:var(--muted);font-size:clamp(12px,3.4vw,14px);margin-top:8px}
+@media (max-width:429px){ .long{display:none} }
+
 @media (prefers-reduced-motion:reduce){
   .inner{transition:none}
   .card.wrong .inner{animation:none}
@@ -131,10 +170,11 @@ main{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
 <body>
 <div id="app">
   <header>
-    <div class="title">🪐 태양계 천체 짝 맞추기</div>
+    <div class="title">🪐 <span class="long">태양계 </span>천체 짝 맞추기</div>
     <div class="btns">
       <button class="btn" id="newBtn">새 게임</button>
-      <button class="btn" id="reviewBtn">전체 정리</button>
+      <button class="btn" id="rankBtn">순위</button>
+      <button class="btn" id="reviewBtn"><span class="long">전체 </span>정리</button>
       <button class="btn" id="fsBtn" hidden>전체 화면</button>
     </div>
     <div class="bar">
@@ -147,14 +187,44 @@ main{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
   <main id="board"><div id="grid"></div></main>
 </div>
 
+<!-- 시작 화면: 이름과 모드 -->
+<div class="overlay show" id="startO">
+  <div class="box">
+    <h2>🪐 태양계 천체 짝 맞추기</h2>
+    <label class="field"><span class="flbl">이름</span>
+      <input id="nameIn" maxlength="12" placeholder="예: 1반 홍길동" autocomplete="off" enterkeyhint="go"></label>
+    <div class="flbl">모드</div>
+    <div class="modes">
+      <button class="mode" data-mode="normal"><b>기본 모드</b><span>천체 8개, 카드 16장 (4×4)</span></button>
+      <button class="mode" data-mode="hard"><b>하드 모드</b><span>천체 13개 모두, 카드 26장</span></button>
+    </div>
+    <div class="err" id="startErr"></div>
+    <button class="btn primary big" id="startBtn">게임 시작</button>
+    <button class="btn cancel" id="startCancel" hidden>취소</button>
+  </div>
+</div>
+
 <!-- 종료 -->
 <div class="overlay" id="endO">
   <div class="box">
     <div id="endContent"></div>
     <div class="row">
       <button class="btn primary" id="againBtn">다시 하기</button>
-      <button class="btn" id="endReviewBtn">전체 정리 보기</button>
+      <button class="btn" id="homeBtn">처음으로</button>
+      <button class="btn" id="endRankBtn">순위 보기</button>
+      <button class="btn" id="endReviewBtn">전체 정리</button>
     </div>
+  </div>
+</div>
+
+<!-- 순위 -->
+<div class="overlay" id="rankO">
+  <div class="box rank">
+    <div class="rvhead"><h2>🏆 순위</h2><button class="btn" data-close="rankO">닫기</button></div>
+    <div class="tabs" id="tabMode"><button data-v="normal">기본 모드</button><button data-v="hard">하드 모드</button></div>
+    <div class="tabs" id="tabCat"><button data-v="moves">최소 횟수</button><button data-v="time">최단 시간</button></div>
+    <div class="rlist" id="rlist"></div>
+    <div class="rnote">같은 이름은 가장 좋은 기록 하나만 보여요.</div>
   </div>
 </div>
 
@@ -305,8 +375,18 @@ const BODIES = [
   {name:'위성',    draw:DRAW.moon,     img:'', desc:'행성 주위를 공전하는 천체이다. 달은 지구의 위성이다.'}
 ];
 
+/* ===== 리더보드 연결 =====
+   구글 Apps Script 웹 앱 주소(…/exec)를 따옴표 안에 붙여 넣으세요. 비워 두면 기록 저장 없이 게임만 됩니다. */
+const SCRIPT_URL = '';
+
 /* ===== 게임 설정 ===== */
-const PAIRS = 8;          // 한 판에 쓰는 천체 수 (4×4 = 16장)
+const MODES = {
+  normal: {name:'기본 모드', pairs:8},    // 4×4 = 16장, 13개 중 8개 무작위
+  hard:   {name:'하드 모드', pairs:13}    // 천체 13개 모두 = 26장
+};
+let mode = 'normal', startMode = 'normal', player = '';
+try { player = localStorage.getItem('solar-memory-name') || ''; } catch(e) {}
+const pairs = () => MODES[mode].pairs;
 
 const $ = s => document.querySelector(s);
 let deck=[], flipped=[], matched=new Set(), wrongPair=null;
@@ -327,8 +407,9 @@ function faceInner(c){
   return `<div class="name">✓ ${B.name}</div><div class="tw"><span>${B.desc}</span></div>`;
 }
 
-function newGame(){
-  const picks = shuffle([...BODIES.keys()]).slice(0, PAIRS);
+function newGame(m){
+  if(m) mode = m;
+  const picks = shuffle([...BODIES.keys()]).slice(0, pairs());
   deck = shuffle(picks.flatMap(b => [{b,type:'img'},{b,type:'desc'}]));
   clearTimeout(backTimer);
   flipped=[]; matched=new Set(); wrongPair=null; moves=0; lock=false;
@@ -339,21 +420,38 @@ function newGame(){
         <div class="face down"><span class="num">${i+1}</span></div>
         <div class="face up fc ${c.type}${isFull(c)?' full':''}">${faceInner(c)}</div>
       </div></div>`).join('');
-  $('#endO').classList.remove('show');
+  $('#endO').classList.remove('show'); $('#startO').classList.remove('show');
+  $('#board').scrollTop = 0;
   layout(); updateStats(); setMsg('두 장을 뒤집어 보세요');
 }
 
-/* 화면 크기에 맞춰 4×4 카드판 크기 정하기 */
+/* 화면 크기에 맞춰 카드판 크기 정하기 */
 function layout(){
-  const r = $('#board').getBoundingClientRect();
-  const g = r.width < 600 ? 5 : 10;
-  let w = (r.width - 3*g)/4, h = (r.height - 3*g)/4;
-  if(w/h > .78) w = h*.78;          // 가로로 넓은 화면: 카드 폭 줄이기
-  else if(w/h < .55) h = w/.55;     // 세로로 긴 화면: 카드 높이 줄이기
-  const grid = $('#grid');
+  const board = $('#board'), grid = $('#grid'), n = deck.length;
+  board.classList.remove('scroll');
+  const r = board.getBoundingClientRect(), W = r.width, H = r.height;
+  const g = W < 600 ? 5 : 10;
+  const size = cols => {
+    const rows = Math.ceil(n/cols);
+    let w = (W - (cols-1)*g)/cols, h = (H - (rows-1)*g)/rows;
+    if(w/h > .78) w = h*.78;          // 너무 넓으면 폭 줄이기
+    else if(w/h < .55) h = w/.55;     // 너무 길쭉하면 높이 줄이기
+    return {cols, rows, w, h};
+  };
+  // 기본 모드는 항상 4×4, 하드 모드는 화면에 가장 크게 들어가는 배치 선택
+  const cands = n <= 16 ? [4] : [4,5,6,7,9];
+  let L = cands.map(size).reduce((a,b) => b.w*b.h > a.w*a.h ? b : a);
+  // 휴대폰에서 하드 모드 카드가 너무 작아지면: 한 줄 4장 + 위아래 스크롤
+  if(n > 16 && L.w < 100){
+    const w = (W - 3*g)/4;
+    L = {cols:4, rows:Math.ceil(n/4), w, h:w/.62};
+    board.classList.add('scroll');
+  }
   grid.style.gap = g+'px';
-  grid.style.width = (4*w + 3*g)+'px';
-  grid.style.height = (4*h + 3*g)+'px';
+  grid.style.gridTemplateColumns = `repeat(${L.cols},1fr)`;
+  grid.style.gridTemplateRows = `repeat(${L.rows},1fr)`;
+  grid.style.width = (L.cols*L.w + (L.cols-1)*g)+'px';
+  grid.style.height = (L.rows*L.h + (L.rows-1)*g)+'px';
   requestAnimationFrame(fitAll);
 }
 /* 특징 문장이 카드 안에 다 들어가도록 글자 크기 맞추기 */
@@ -402,16 +500,97 @@ function flipBack(){
 }
 
 function setMsg(t, cls=''){ const m=$('#msg'); m.textContent=t; m.className='msg '+cls; }
-function updateStats(){ $('#moves').textContent=moves; $('#pairs').textContent=`${matched.size/2}/${PAIRS}`; }
+function updateStats(){ $('#moves').textContent=moves; $('#pairs').textContent=`${matched.size/2}/${pairs()}`; }
 function fmt(){ const s = t0 ? Math.floor((Date.now()-t0)/1000) : 0; return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; }
 function updateTime(){ $('#time').textContent = fmt(); }
 
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtS = s => `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+
 function finish(){
   clearInterval(timerId);
-  $('#endContent').innerHTML = `<h2>🎉 모두 찾았어요!</h2>
-    <div class="endstats">시도 <b>${moves}번</b><br>걸린 시간 <b>${fmt()}</b></div>`;
+  const secs = Math.max(1, Math.floor((Date.now()-t0)/1000));
+  $('#endContent').innerHTML = `<h2>🎉 ${mode==='hard' ? '하드 모드 완료!' : '모두 찾았어요!'}</h2>
+    <div class="endstats">${esc(player)}<br>시도 <b>${moves}번</b>, 걸린 시간 <b>${fmtS(secs)}</b></div>
+    ${SCRIPT_URL ? '<div class="rec" id="rec"></div>' : ''}`;
   $('#endO').classList.add('show');
+  if(SCRIPT_URL) submit({name:player, mode, moves, secs});
 }
+function submit(rec){
+  const box = $('#rec');
+  box.textContent = '기록 저장 중…';
+  fetch(SCRIPT_URL, {method:'POST', body:JSON.stringify(rec)})
+    .then(r => r.json())
+    .then(d => {
+      if(!d.ok) throw new Error(d.error);
+      delete cache[rec.mode];
+      box.innerHTML = `<div>최소 횟수 <b>${d.rankMoves}위</b> / ${d.totalMoves}명</div>
+        <div>최단 시간 <b>${d.rankTime}위</b> / ${d.totalTime}명</div><small>내 최고 기록 기준 순위예요</small>`;
+    })
+    .catch(() => {
+      box.innerHTML = '기록을 저장하지 못했어요. 인터넷 연결을 확인해 주세요.<br><button class="btn" id="retryBtn">다시 저장</button>';
+      $('#retryBtn').onclick = () => submit(rec);
+    });
+}
+
+/* ===== 순위 ===== */
+const cache = {};
+let view = {mode:'normal', cat:'moves'};
+function openRank(){
+  view.mode = mode;
+  delete cache.normal; delete cache.hard;   // 열 때마다 새로 불러오기
+  $('#rankO').classList.add('show');
+  renderRank();
+}
+function renderRank(){
+  document.querySelectorAll('#tabMode button').forEach(b => b.classList.toggle('on', b.dataset.v===view.mode));
+  document.querySelectorAll('#tabCat button').forEach(b => b.classList.toggle('on', b.dataset.v===view.cat));
+  const list = $('#rlist');
+  if(!SCRIPT_URL){ list.innerHTML = '<div class="rempty">아직 리더보드가 연결되지 않았어요.</div>'; return; }
+  const data = cache[view.mode];
+  if(!data){
+    list.innerHTML = '<div class="rempty">순위를 불러오는 중…</div>';
+    const m = view.mode;
+    fetch(`${SCRIPT_URL}?mode=${m}`).then(r => r.json()).then(d => {
+      if(!d.ok) throw new Error(d.error);
+      cache[m] = d;
+      if(view.mode===m) renderRank();
+    }).catch(() => {
+      if(view.mode===m) list.innerHTML = '<div class="rempty">순위를 불러오지 못했어요.<br>인터넷 연결을 확인해 주세요.</div>';
+    });
+    return;
+  }
+  const rows = data[view.cat];
+  if(!rows.length){ list.innerHTML = '<div class="rempty">아직 기록이 없어요.<br>첫 번째 기록의 주인공이 되어 보세요!</div>'; return; }
+  const medal = ['🥇','🥈','🥉'];
+  list.innerHTML = rows.map((r,i) => {
+    const val = view.cat==='moves'
+      ? `${r.moves}번<small>${fmtS(r.secs)}</small>`
+      : `${fmtS(r.secs)}<small>${r.moves}번</small>`;
+    return `<div class="rrow${r.name===player?' me':''}"><div class="rk">${medal[i]||i+1}</div>
+      <div class="nm">${esc(r.name)}</div><div class="val">${val}</div></div>`;
+  }).join('');
+}
+
+/* ===== 시작 화면 ===== */
+function openStart(first){
+  startMode = mode;
+  $('#nameIn').value = player;
+  $('#startErr').textContent = '';
+  $('#startCancel').hidden = !!first;
+  document.querySelectorAll('.mode').forEach(b => b.classList.toggle('on', b.dataset.mode===startMode));
+  $('#endO').classList.remove('show');
+  $('#startO').classList.add('show');
+}
+function startGame(){
+  const name = $('#nameIn').value.replace(/\s+/g,' ').trim().slice(0,12);
+  if(!name){ $('#startErr').textContent = '이름을 입력해 주세요'; $('#nameIn').focus(); return; }
+  player = name;
+  try { localStorage.setItem('solar-memory-name', name); } catch(e) {}
+  $('#nameIn').blur();
+  newGame(startMode);
+}
+
 function openReview(){
   $('#rvlist').innerHTML = BODIES.map(B=>`<div class="rv"><div class="pic">${pic(B)}</div><div><h3>${B.name}</h3><p>${B.desc}</p></div></div>`).join('');
   $('#reviewO').classList.add('show');
@@ -428,12 +607,25 @@ $('#board').addEventListener('keydown', e => {
   const c=e.target.closest('.card'); if(c){ e.preventDefault(); pick(+c.dataset.i); }
 });
 $('header').addEventListener('click', e => { if(wrongPair && !e.target.closest('button')) flipBack(); });
-$('#newBtn').onclick = newGame;
-$('#againBtn').onclick = newGame;
+$('#newBtn').onclick = () => openStart(false);
+$('#homeBtn').onclick = () => openStart(false);
+document.querySelectorAll('.mode').forEach(b => b.onclick = () => {
+  startMode = b.dataset.mode;
+  document.querySelectorAll('.mode').forEach(x => x.classList.toggle('on', x===b));
+});
+$('#startBtn').onclick = startGame;
+$('#nameIn').addEventListener('keydown', e => { if(e.key==='Enter') startGame(); });
+$('#nameIn').addEventListener('input', () => $('#startErr').textContent = '');
+$('#startCancel').onclick = () => $('#startO').classList.remove('show');
+$('#againBtn').onclick = () => newGame();
+$('#rankBtn').onclick = openRank;
+$('#endRankBtn').onclick = openRank;
+$('#tabMode').onclick = e => { const b=e.target.closest('button'); if(b){ view.mode=b.dataset.v; renderRank(); } };
+$('#tabCat').onclick = e => { const b=e.target.closest('button'); if(b){ view.cat=b.dataset.v; renderRank(); } };
 $('#reviewBtn').onclick = openReview;
 $('#endReviewBtn').onclick = openReview;
 document.querySelectorAll('[data-close]').forEach(b => b.onclick = () => $('#'+b.dataset.close).classList.remove('show'));
-document.addEventListener('keydown', e => { if(e.key==='Escape') $('#reviewO').classList.remove('show'); });
+document.addEventListener('keydown', e => { if(e.key==='Escape'){ $('#reviewO').classList.remove('show'); $('#rankO').classList.remove('show'); } });
 if(document.fullscreenEnabled){
   $('#fsBtn').hidden = false;
   $('#fsBtn').onclick = () => document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
@@ -442,6 +634,7 @@ let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(lay
 if(document.fonts) document.fonts.ready.then(fitAll);
 
 newGame();
+openStart(true);
 </script>
 </body>
 </html>
